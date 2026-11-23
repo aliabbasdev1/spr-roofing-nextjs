@@ -1,0 +1,27 @@
+{
+  "name": "spr-roofing-nextjs",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "node scripts/serve-static.mjs",
+    "preview": "node scripts/serve-static.mjs",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "next": "15.5.3",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "three": "0.160.0",
+    "gsap": "3.12.5",
+    "lenis": "1.1.13"
+  },
+  "devDependencies": {
+    "typescript": "^5.7.3",
+    "@types/node": "^22",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "@types/three": "^0.160.0"
+  }
+}

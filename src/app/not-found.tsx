@@ -1,0 +1,1 @@
+export default function NotFound(){return <main style={{padding:'12rem 2rem',fontFamily:'Manrope, sans-serif',background:'#070708',color:'#fff',minHeight:'100vh',textAlign:'center'}}><h1>Page not found</h1><p><a href="/">Return to SPR Roofing Group</a></p></main>}
