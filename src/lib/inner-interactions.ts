@@ -1,5 +1,5 @@
 // @ts-nocheck
-import {SPR} from './siteDetails';
+import {mountContactLinks, configureQuoteLinks} from './contact-links';
 import {gsap} from 'gsap';
 import {ScrollTrigger} from 'gsap/ScrollTrigger';
 import Lenis from 'lenis';
@@ -12,14 +12,7 @@ export function mountInnerInteractions(){
 const $$ = s => document.querySelectorAll(s);
 
 /* ---------- contact details ---------- */
-$$('[data-phone-text]').forEach(e => e.textContent = SPR.phoneDisplay);
-$$('[data-email-text]').forEach(e => e.textContent = SPR.email);
-$$('[data-tel]').forEach(e => e.href = 'tel:' + SPR.phoneTel);
-$$('[data-mail]').forEach(e => e.href = 'mailto:' + SPR.email);
-$$('[data-wa]').forEach(e => e.href = 'https://wa.me/' + SPR.whatsapp);
-$$('[data-licence]').forEach(e => e.textContent = SPR.licence);
-$$('[data-abn]').forEach(e => e.textContent = SPR.abn);
-const yr = document.getElementById('yr'); if (yr) yr.textContent = new Date().getFullYear();
+mountContactLinks();
 
 /* ---------- header + mobile menu ---------- */
 const header = document.getElementById('header');
@@ -34,8 +27,7 @@ $$('.quoteForm').forEach(f => f.addEventListener('submit', e => {
   f.querySelectorAll('[data-req]').forEach(el => { const bad = !el.value.trim(); el.style.borderColor = bad ? '#d4553f' : ''; if (bad) ok = false; });
   if (!ok) return;
   const msg = `Quote request - SPR Roofing Group\n\nName: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.email || '-'}\nSuburb: ${d.suburb}\nService: ${d.service}\n\nJob details:\n${d.message || '-'}`;
-  f.querySelector('.sendWa').href = 'https://wa.me/' + SPR.whatsapp + '?text=' + encodeURIComponent(msg);
-  f.querySelector('.sendMail').href = 'mailto:' + SPR.email + '?subject=' + encodeURIComponent('Quote request - ' + d.suburb) + '&body=' + encodeURIComponent(msg);
+  configureQuoteLinks(f.querySelector('.sendWa'), f.querySelector('.sendMail'), msg, String(d.suburb || ''));
   f.querySelector('.sent').classList.add('show');
 }));
 

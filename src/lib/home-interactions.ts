@@ -1,15 +1,9 @@
-import {SPR} from './siteDetails';
+import {mountContactLinks, configureQuoteLinks} from './contact-links';
 
 /** React-mounted conversion of the original home-page DOM interactions. */
 export function mountHomeInteractions(){
   const $$ = <T extends Element = HTMLElement>(selector:string): T[] => [...document.querySelectorAll<T>(selector)];
-  $$('[data-phone-text]').forEach(e=>e.textContent=SPR.phoneDisplay);
-  $$('[data-email-text]').forEach(e=>e.textContent=SPR.email);
-  $$<HTMLAnchorElement>('[data-tel]').forEach(e=>e.href='tel:'+SPR.phoneTel);
-  $$<HTMLAnchorElement>('[data-mail]').forEach(e=>e.href='mailto:'+SPR.email);
-  $$('[data-licence]').forEach(e=>e.textContent=SPR.licence);
-  $$('[data-abn]').forEach(e=>e.textContent=SPR.abn);
-  const yr=document.getElementById('yr');if(yr)yr.textContent=String(new Date().getFullYear());
+  mountContactLinks();
   const burger=document.getElementById('burger');
   const toggleMenu=()=>document.body.classList.toggle('menu-open');
   burger?.addEventListener('click',toggleMenu);
@@ -35,8 +29,7 @@ export function mountHomeInteractions(){
     const msg=`Quote request - SPR Roofing Group\n\nName: ${d.name}\nPhone: ${d.phone}\nEmail: ${d.email||'-'}\nSuburb: ${d.suburb}\nService: ${d.service}\n\nJob details:\n${d.message||'-'}`;
     const wa=document.getElementById('sendWa') as HTMLAnchorElement|null;
     const mail=document.getElementById('sendMail') as HTMLAnchorElement|null;
-    if(wa)wa.href='https://wa.me/'+SPR.whatsapp+'?text='+encodeURIComponent(msg);
-    if(mail)mail.href='mailto:'+SPR.email+'?subject='+encodeURIComponent('Quote request - '+d.suburb)+'&body='+encodeURIComponent(msg);
+    configureQuoteLinks(wa, mail, msg, String(d.suburb || ''));
     document.getElementById('sent')?.classList.add('show');
   };
   form?.addEventListener('submit',onSubmit);
