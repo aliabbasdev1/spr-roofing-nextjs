@@ -1,8 +1,12 @@
-import type { NextConfig } from 'next';
-const nextConfig:NextConfig={
-  // Static export for Netlify Drop / Netlify Publish directory = out.
-  output:'export',
-  images:{unoptimized:true},
-  trailingSlash:true,
+
+import type { NextConfig } from "next";
+
+const nextConfig: NextConfig = {
+  output: "export",
+  trailingSlash: true,
+  images: {
+    unoptimized: true,
+  },
 };
+
 export default nextConfig;
