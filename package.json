@@ -8,7 +8,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "next build && node scripts/fix-segment-files.mjs && node scripts/verify-export.mjs",
+    "build": "node scripts/build.mjs",
     "start": "node scripts/serve-static.mjs",
     "typecheck": "tsc --noEmit",
     "images": "node scripts/build-images.mjs"

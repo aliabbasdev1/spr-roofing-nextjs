@@ -6,6 +6,7 @@ Next.js 16 (App Router) site, exported as a fully static site. Hostinger serves 
 
 | Setting | Value |
 |---|---|
+| Framework / application type | **Static / Other**. The "Next.js" preset can switch off the static export. `scripts/build.mjs` protects against it, but Static is the right setting. |
 | Build command | `npm run build` |
 | Output directory | `out` |
 | Node.js | 22.x (20.9+ works) |
