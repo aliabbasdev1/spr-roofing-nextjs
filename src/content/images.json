@@ -1,0 +1,78 @@
+{
+  "ceiling-leak": {
+    "width": 454,
+    "height": 560,
+    "widths": [
+      454
+    ]
+  },
+  "gutter-rain": {
+    "width": 669,
+    "height": 618,
+    "widths": [
+      480,
+      669
+    ]
+  },
+  "house-sunset": {
+    "width": 1254,
+    "height": 534,
+    "widths": [
+      480,
+      800,
+      1200,
+      1254
+    ]
+  },
+  "roof-colours": {
+    "width": 440,
+    "height": 400,
+    "widths": [
+      440
+    ]
+  },
+  "roof-dusk": {
+    "width": 1254,
+    "height": 494,
+    "widths": [
+      480,
+      800,
+      1200,
+      1254
+    ]
+  },
+  "roof-plan": {
+    "width": 900,
+    "height": 240,
+    "widths": [
+      480,
+      800,
+      900
+    ]
+  },
+  "spr-logo": {
+    "width": 720,
+    "height": 426,
+    "widths": [
+      240,
+      480
+    ]
+  },
+  "tile-ridge": {
+    "width": 1254,
+    "height": 384,
+    "widths": [
+      480,
+      800,
+      1200,
+      1254
+    ]
+  },
+  "tile-texture": {
+    "width": 349,
+    "height": 305,
+    "widths": [
+      349
+    ]
+  }
+}

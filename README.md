@@ -1,83 +1,49 @@
-# SPR Roofing Group — Next.js 15 App Router
+# SPR Roofing Group — sprroofing.com.au
 
-This is an update to the **existing** `spr-roofing-nextjs` GitHub repository, not a new repository. The original static design/animations/assets are preserved in React TSX. There are no legacy HTML page source files.
+Next.js 16 (App Router) site, exported as a fully static site. Hostinger serves plain HTML/CSS/JS from `out/`, so no Node server runs in production.
 
-## What this update contains
+## Hostinger settings
 
-- Dedicated `/contact/` page (already present in the previous ZIP, verified and included).
-- All header/menu links to Contact plus an explicit **Contact Us** link in each footer.
-- Contact/WhatsApp/telephone values configured in **one** TypeScript file with safe fallbacks, so missing details do not dial a fake number.
-- Existing quote forms preserved; WhatsApp + email message links are prepared on submit, but **no server-side form delivery** is implemented.
-- Static export verification in `npm run build`, including `out/contact/index.html`.
-- SEO sitemap links normalized to `trailingSlash: true` URL paths.
-- Preserved GSAP, ScrollTrigger, Lenis, Three.js, images and page components.
+| Setting | Value |
+|---|---|
+| Build command | `npm run build` |
+| Output directory | `out` |
+| Node.js | 22.x (20.9+ works) |
 
-## SPR Roofing contact number (configured)
+Push to the connected branch → Hostinger builds and deploys. The build fails on purpose (`scripts/verify-export.mjs`) if any page, the phone number, an H1, a canonical link, the sitemap or robots file is missing.
 
-Edit `src/lib/siteDetails.ts`:
+## Commands
 
-```ts
-const phoneNumber = '0479 083 101';  // supplied SPR Roofing mobile
-const whatsappNumber = '';         // optional different WhatsApp mobile
-```
-
-Phone links dial **+61 479 083 101** and display **0479 083 101**. Current contact-link code defaults WhatsApp to the same mobile number; confirm this number supports WhatsApp before advertising that option. Otherwise configure a separate verified WhatsApp number or disable its links.
-
-Also verify the email mailbox `info@sprroofing.com.au` exists and fill in the NSW contractor licence/ABN **only if confirmed**. Blank licence/ABN fields are hidden from the UI.
-
-## Update the existing local Git repository (recommended)
-
-1. In VS Code, open your **existing cloned** repository folder (where `.git` already exists).
-2. Extract the **Update-Only ZIP** into that same project folder, overwriting matching files. DO NOT delete `.git`, reinstall Git, or create another repository.
-3. The phone number is already updated. Review `src/lib/siteDetails.ts` before going live.
-4. Run:
-
-```powershell
+```bash
 npm install
-npm run build
-Test-Path .\out\contact\index.html
-# Must return True
-
-git status
-git add .
-git commit -m "Improve contact page and hosting static export"
-git push origin main
+npm run dev        # local development  → http://localhost:3000
+npm run build      # production static build → out/
+npm start          # preview the built site (gzip on) → http://localhost:3000
+npm run images     # re-generate optimised images after changing assets-src/
 ```
 
-If a previous Hostinger deployment reads a **different repository** than the one you push, change the Hostinger Git source to the correct repository and branch first.
+## Where to edit things
 
-## Hostinger Cloud Startup deployment
+| What | File |
+|---|---|
+| Phone, email, WhatsApp, **licence number, ABN** | `src/lib/site.ts` |
+| Service pages (all 9) | `src/content/services.ts` |
+| Service areas | `src/content/areas.ts` |
+| Contact FAQs, process steps, "signs" cards, form options | `src/content/shared.ts` |
+| Page titles & descriptions | each `src/app/**/page.tsx` (`pageMetadata`) |
+| Styles | `src/app/globals.css` |
+| Images | put originals in `assets-src/`, run `npm run images`, commit the results |
 
-- Source: correct GitHub repository, branch `main`
-- Node: 22.x
-- Root directory: `./` if the repository root contains `package.json`
-- Build command: `npm run build`
-- Output directory: `out` (**not** `.next`)
-- Required env vars: none for the current static site
+Text wrapped in `*asterisks*` in content files renders in the gold gradient.
 
-The site uses `output: 'export'` and `trailingSlash: true`. Verify `out/index.html` and `out/contact/index.html` locally before redeploy. The contact form uses email/WhatsApp deep links; static hosting itself does not send email.
+## What's built in
 
-## Project structure
+- **SEO:** unique title/description/canonical on every page, Open Graph and Twitter share image, JSON-LD (RoofingContractor, WebSite, BreadcrumbList, Service, FAQPage, ItemList), `sitemap.xml`, `robots.txt`, web manifest, favicon/Apple icon. The URLs are the same as the previous site's (`/about/`, `/services/roof-leak-repairs/`, …), and `public/.htaccess` 301-redirects old `.html` links.
+- **Speed:** static HTML, self-hosted fonts, responsive WebP images with fixed dimensions (no layout shift), and CSS-only hero animation. GSAP and Lenis (smooth scroll) only load on the visitor's first scroll or tap, and never for reduced-motion users.
+- **Reliability:** all content is visible without JavaScript, and the phone number and email are in the HTML itself.
+- **Accessibility:** skip link, keyboard-friendly menu and accordion, labelled form fields with error messages, WCAG AA contrast.
 
-```text
-public/assets/                       Original photos and logo
-src/app/                             Next.js App Router pages / SEO metadata
-src/app/contact/page.tsx             Contact page route
-src/components/pages/contact.tsx     Contact layout (React JSX, no HTML source)
-src/components/pages/                All 14 page view components
-src/components/RouteEffects.tsx      Route-specific browser effects
-src/lib/siteDetails.ts               SINGLE SOURCE for business contact details
-src/lib/contact-links.ts             Safe tel/WhatsApp/mailto setup
-src/lib/home-*.ts                     Home motion, Three.js scene, interactions
-src/lib/inner-interactions.ts         Inner pages/FAQ/quote forms/motion
-src/styles/                          Existing site styles
-scripts/verify-export.mjs            Build output check
-```
+## Notes
 
-## Known items to finish before going live
-
-1. Phone **0479 083 101** is configured; confirm whether WhatsApp uses this same mobile.
-2. Verify `info@sprroofing.com.au` receives email; the form prepares an email but does not automatically submit to a server.
-3. NSW contractor licence and ABN, if appropriate and verified.
-4. Test the contact form, links, responsive menu and 3D animation on deployed Hostinger site.
-5. Verify DNS/SSL and Google Search Console after the site is live.
+- `scripts/fix-segment-files.mjs` works around a Next 16 bug that only affects **Windows** builds (prefetch files written into nested folders). It does nothing on Hostinger's Linux build.
+- The quote form doesn't store anything. It prepares a WhatsApp or email message for the visitor to send.
