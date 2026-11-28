@@ -17,7 +17,7 @@ for (const f of pages) {
   const p = join(out, f);
   if (!existsSync(p)) continue;
   const html = readFileSync(p, 'utf8');
-  if (!html.includes('0479 083 101')) problems.push(`${f}: phone number not in HTML`);
+  if (!html.includes('0420 150 956')) problems.push(`${f}: phone number not in HTML`);
   if (!/<h1[\s>]/.test(html)) problems.push(`${f}: no <h1>`);
   if (f !== '404.html' && !html.includes('rel="canonical"')) problems.push(`${f}: no canonical`);
 }

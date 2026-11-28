@@ -12,10 +12,10 @@ export const site = {
     'Roofing and roof repair specialists for homes and businesses across Sydney. Your roof. Our responsibility.',
 
   phone: {
-    display: '0479 083 101',
-    e164: '+61479083101',
+    display: '0420 150 956',
+    e164: '+61420150956',
   },
-  whatsapp: '61479083101', // wa.me format: country code, no +
+  whatsapp: '61420150956', // wa.me format: country code, no +
   email: 'info@sprroofing.com.au',
 
   /** Add these when available. Empty values are hidden everywhere. */
